@@ -2,12 +2,12 @@
 var db = require("../../models");
 var should = require("should");
 var app = require("../../bin/www").server;
-var request = require("supertest").agent(app.listen());
+var request = require("supertest").agent(app);
 
 jest.mock("../../lib/wx");
 const Wx = require("../../lib/wx");
 
-var sleep = function(time){
+var sleep = function (time) {
   return new Promise(function (resolve) {
     setTimeout(function () {
       resolve("ok");
@@ -21,12 +21,12 @@ afterAll(() => {
   // process.exit();
 })
 
-beforeEach(()=>{
+beforeEach(() => {
   // console.log('begin');
 })
 
 describe('test index', () => {
-  test("should return the string 'test'", async () => {
+  it("should return the string 'test'", async () => {
     const response = await request
       .get('/api')
       .expect(200)
@@ -36,7 +36,7 @@ describe('test index', () => {
 });
 
 describe('test getUserInfo', () => {
-  test("should return development", async () => {
+  it("should return development", async () => {
 
     Wx.getUserInfo.mockImplementation(params => {
       return {
@@ -67,7 +67,7 @@ describe('test getUserInfo', () => {
 
 describe('test auth', () => {
 
-  test("should return a hash", async () => {
+  it("should return a hash", async () => {
 
     Wx.getUserInfo.mockImplementation(() => {
       return 'mock token'
